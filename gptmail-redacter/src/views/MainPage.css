@@ -1,0 +1,79 @@
+.App {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header, footer {
+    background-color: #282c34;
+    padding: 1rem;
+    color: white;
+}
+
+header {
+    flex-shrink: 0;
+}
+
+footer {
+    flex-shrink: 0;
+    margin-top: auto;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem;
+    flex-grow: 1;
+}
+
+.input-column, .result-column {
+    width: 45%;
+}
+
+input, textarea, select {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+}
+
+.required input:not(:focus),
+.required textarea:not(:focus) {
+    border: 1px solid red;
+}
+
+.generated-email {
+    position: relative;
+}
+
+.copy-btn-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.copy-bar {
+    display: flex;
+    justify-content: flex-end;
+    /* background-color: #f0f0f0; */
+    /* padding: 0.5rem;  */
+    /* border-bottom: 1px solid #ccc; */
+}
+
+.copy-btn {
+    background-color: #898989c7;
+    /* background-color: #007bff; */
+    color: #fff;
+    border: none;
+    padding: 0.3rem 0.5rem;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 3px;
+}
+.copy-btn:hover {
+    background-color: #0056b3;
+}
+
+.generated-email p {
+    white-space: pre-wrap;
+}
