@@ -8,13 +8,15 @@ import './MainPage.css'
 function MainPage() {
 
   const [emailData, setEmailData] = useState({
-      recipient: '',
-      subject: '',
-      body: '',
+      name: '',
+      case: '',
+      request: '',
       greeting: 'Hola'
   });
+  const [language, setLanguage] = useState('spanish');
   const [generatedEmail, setGeneratedEmail] = useState('');
   const [buttonPressed, setButtonPressed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,14 +26,29 @@ function MainPage() {
     });
 };
 
+    const handleLanguageChange = (e) => {
+        setLanguage(e.target.value);
+    };
+
   const handleGenerateEmail = async () => {
-      // Mock using the sample mail
-      setButtonPressed(true);
-      if (!emailData.recipient || !emailData.subject || !emailData.body) {
+        setButtonPressed(true);
+        setLoading(true);
+        if (!emailData.name || !emailData.case || !emailData.request) {
         alert('Porfavor rellenar todos los campos antes de generar un correo.');
         return;
-      }
-      setGeneratedEmail(sampleMail[emailData.greeting]);
+        }
+        
+        axios.post('http://localhost:8000/generate', 
+        {
+            "email_data": emailData,
+            "language": language
+        })
+        .then((response) => {
+            const content = response.data.content;
+            setGeneratedEmail(content);
+            setLoading(false);
+        })
+        .catch((error) => console.error('Error:', error));
   };
 
   const handleCopyToClipboard = () => {
@@ -44,34 +61,34 @@ function MainPage() {
     <div className="main-content">
         <div className="input-column">
             <h2>Crear Email</h2>
-            <label className={buttonPressed && !emailData.recipient ? 'required' : ''}>
+            <label className={buttonPressed && !emailData.name ? 'required' : ''}>
                 Nombre y Apellido:
                 <input
                     type="text"
-                    name="recipient"
+                    name="name"
                     maxLength={30}
-                    value={emailData.recipient}
+                    value={emailData.name}
                     placeholder='Juan Perez'
                     onChange={handleChange} 
                 />
             </label>
-            <label className={buttonPressed && !emailData.subject ? 'required' : ''}>
-                Asunto:
+            <label className={buttonPressed && !emailData.case ? 'required' : ''}>
+                Caso/Asunto:
                 <input
                     type="text"
-                    name="subject"
+                    name="case"
                     maxLength={50}
-                    value={emailData.subject}
+                    value={emailData.case}
                     placeholder='Solicitud de información'
                     onChange={handleChange}
                 />
             </label>
-            <label className={buttonPressed && !emailData.body ? 'required' : ''}>
+            <label className={buttonPressed && !emailData.request ? 'required' : ''}>
                 Solicitud:
                 <input
-                    name="body"
-                    maxLength={60}
-                    value={emailData.body}
+                    name="request"
+                    maxLength={100}
+                    value={emailData.request}
                     placeholder='Quisiera solicitar información sobre...'
                     onChange={handleChange}
                 />
@@ -90,9 +107,30 @@ function MainPage() {
                     <option value={"Saludos Cordiales"}>Saludos Cordiales</option>
                 </select>
             </label>
+            <label>
+                Idiomas:
+                <select
+                    name="language"
+                    value={language}
+                    onChange={handleLanguageChange}
+                >
+                    <option value={"spanish"}>Español</option>
+                    <option value={"english"}>Inglés</option>
+                    <option value={"french"}>Francés</option>
+                    <option value={"german"}>Alemán</option>
+                    <option value={"italian"}>Italiano</option>
+                    <option value={"portuguese"}>Portugués</option>
+                    <option value={"chinese"}>Chino</option>
+                    <option value={"japanese"}>Japonés</option>
+                </select>
+            </label>
             <button onClick={handleGenerateEmail}>Generar Email</button>
         </div>
         <div className="result-column">
+            {/* If loading put a loading gif */}
+            {loading ? 
+            <div className="main-content"><img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading" /></div> : 
+            <>
                 <h2>Email Generado</h2>
                 <div className="generated-email">
                 <div className="copy-bar">
@@ -103,11 +141,12 @@ function MainPage() {
                     { generatedEmail
                       ? <>
                           <p>{generatedEmail}</p>
-                          <button onClick={handleGenerateEmail}>Recrear Email</button>
                         </>
                       : ""
                       }
                 </div>
+            </>
+            }
             </div>
     </div>
   );
