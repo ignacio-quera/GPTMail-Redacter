@@ -11,7 +11,7 @@ function MainPage() {
       name: '',
       case: '',
       request: '',
-      greeting: 'Hola'
+      greeting: ''
   });
   const [language, setLanguage] = useState('spanish');
   const [generatedEmail, setGeneratedEmail] = useState('');
@@ -38,7 +38,7 @@ function MainPage() {
         return;
         }
         
-        axios.post('http://localhost:8000/generate', 
+        axios.post('http://localhost:8080/generate', 
         {
             "email_data": emailData,
             "language": language
@@ -103,8 +103,9 @@ function MainPage() {
                     <option value={"Hola"}>Hola</option>
                     <option value={"Buenos dias"}>Buenos días</option>
                     <option value={"Buenas tardes"}>Buenas tardes</option>
-                    <option value={"Estimad@"}>Estimad@</option>
-                    <option value={"Saludos Cordiales"}>Saludos Cordiales</option>
+                    <option value={"Buenas noches"}>Buenas noches</option>
+                    <option value={"Estimado/a"}>Estimado/a</option>
+                    <option value={"Saludos"}>Saludos</option>
                 </select>
             </label>
             <label>
