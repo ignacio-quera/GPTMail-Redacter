@@ -20,3 +20,10 @@ footer {
     padding: 1rem 0;
     width: 100%;
 }
+
+header {
+    display: flex;
+    flex-direction:row;
+    text-align: center;
+    /* padding: 1rem 0; */
+}

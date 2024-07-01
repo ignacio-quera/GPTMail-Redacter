@@ -9,6 +9,7 @@ function MainPage() {
 
   const [emailData, setEmailData] = useState({
       name: '',
+        to: '',
       case: '',
       request: '',
       greeting: ''
@@ -31,12 +32,12 @@ function MainPage() {
     };
 
   const handleGenerateEmail = async () => {
+        if (!emailData.name || !emailData.case || !emailData.request) {
+          alert('Porfavor rellenar todos los campos antes de generar un correo.');
+          return;
+        }
         setButtonPressed(true);
         setLoading(true);
-        if (!emailData.name || !emailData.case || !emailData.request) {
-        alert('Porfavor rellenar todos los campos antes de generar un correo.');
-        return;
-        }
         
         axios.post('http://localhost:8080/generate', 
         {
@@ -62,7 +63,7 @@ function MainPage() {
         <div className="input-column">
             <h2>Crear Email</h2>
             <label className={buttonPressed && !emailData.name ? 'required' : ''}>
-                Nombre y Apellido:
+                Emisor:
                 <input
                     type="text"
                     name="name"
@@ -70,6 +71,17 @@ function MainPage() {
                     value={emailData.name}
                     placeholder='Juan Perez'
                     onChange={handleChange} 
+                />
+            </label>
+            <label className={buttonPressed && !emailData.to ? 'required' : ''}>
+                Destinatario:
+                <input
+                    type="text"
+                    name="to"
+                    maxLength={30}
+                    value={emailData.to}
+                    placeholder='Maria Rodriguez'
+                    onChange={handleChange}
                 />
             </label>
             <label className={buttonPressed && !emailData.case ? 'required' : ''}>
@@ -125,7 +137,7 @@ function MainPage() {
                     <option value={"japanese"}>Japonés</option>
                 </select>
             </label>
-            <button onClick={handleGenerateEmail}>Generar Email</button>
+            <button className='jiraButton' onClick={handleGenerateEmail}>Generar Email</button>
         </div>
         <div className="result-column">
             {/* If loading put a loading gif */}
@@ -142,6 +154,7 @@ function MainPage() {
                     { generatedEmail
                       ? <>
                           <p>{generatedEmail}</p>
+                            <button className='jiraButton' onClick={handleGenerateEmail}>Regenerar Mail</button>   
                         </>
                       : ""
                       }

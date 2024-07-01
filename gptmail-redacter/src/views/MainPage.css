@@ -5,15 +5,53 @@
     min-height: 100vh;
 }
 
+/* Define font as robot */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: rgb(244, 244, 244);
+}
+
+
+
 header, footer {
-    background-color: #282c34;
-    padding: 1rem;
-    color: white;
+    background-color: #ffffff;
+    /* padding: 1rem; */
+    color: rgb(0, 0, 0);
+}
+
+.logo img {
+    height: 32px;
+}
+
+.jira-title {
+    display: flex;
+    align-items: center;
+    margin-left: 70px; /* Adjust this value to increase/decrease space */
+    margin-right: auto; /* This pushes the rest of the content to the right */
+}
+
+.jira-logo {
+    height: 32px;
+    margin-right: 20px;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 header {
-    flex-shrink: 0;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 20px;
 }
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 
 footer {
     flex-shrink: 0;
@@ -76,4 +114,14 @@ input, textarea, select {
 
 .generated-email p {
     white-space: pre-wrap;
+}
+
+.jiraButton {
+    background-color: #0052cc;
+    color: #fff;
+    border: none;
+    padding: 0.3rem 0.5rem;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 10px;
 }
