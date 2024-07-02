@@ -39,7 +39,7 @@ function MainPage() {
         setButtonPressed(true);
         setLoading(true);
         
-        axios.post('http://localhost:8080/generate', 
+        axios.post(`${process.env.REACT_APP_URL}/generate`, 
         {
             "email_data": emailData,
             "language": language
